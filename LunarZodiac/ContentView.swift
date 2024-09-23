@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentYear = Calendar.current.component(.year, from: Date.now)
-    @State private var currentImage = (Calendar.current.component(.year, from: Date.now) % 12 - 4 < 0 ? 12 - (Calendar.current.component(.year, from: Date.now) % 12 - 4) : Calendar.current.component(.year, from: Date.now) % 12 - 4)
+    @State private var currentImageIndex = (Calendar.current.component(.year, from: Date.now) % 12 - 4 < 0 ? 12 - (Calendar.current.component(.year, from: Date.now) % 12 - 4) : Calendar.current.component(.year, from: Date.now) % 12 - 4)
     //Modified to make currentYear based off of real time data
+    
+    private let animalNames = ["RAT", "OX", "TIGER", "RABBIT", "DRAGON", "SNAKE", "HORSE", "GOAT", "MONKEY", "ROOSTER", "DOG", "PIG"]
     var body: some View {
         VStack {
             
@@ -18,29 +20,37 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.black)
                 .foregroundStyle(.red)
+            
             Spacer()
-            Image("image\(currentImage)")
+            
+            Image(animalNames[currentImageIndex])
                 .resizable()
                 .scaledToFit()
+            Text(animalNames[currentImageIndex])
+                .font(.largeTitle)
+                .fontWeight(.black)
             Spacer()
+            
             HStack {
                 Button() {
                     currentYear -= 1
-                    if currentImage == 0 {
-                        currentImage = 11
+                    if currentImageIndex == 0 {
+                        currentImageIndex = 11
                     } else {
-                        currentImage -= 1
+                        currentImageIndex -= 1
                     }
                 } label: {
                     Image(systemName: "chevron.left")
                 }
+                
                 Spacer()
+                
                 Button() {
                     currentYear += 1
-                    if currentImage == 11 {
-                        currentImage = 0
+                    if currentImageIndex == 11 {
+                        currentImageIndex = 0
                     } else {
-                        currentImage += 1
+                        currentImageIndex += 1
                     }
                 } label: {
                     Image(systemName: "chevron.right")
